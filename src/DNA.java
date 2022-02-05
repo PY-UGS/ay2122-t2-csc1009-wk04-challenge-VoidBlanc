@@ -3,8 +3,18 @@ import java.io.*;
 public class DNA {
     public static void main(String[] args) throws IOException {
         File current = new File (".");
-        String filepath = current.getCanonicalPath()+  "/src/sample02";
-        FileInputStream inputStream = new FileInputStream(filepath);
+        String sequence01fp = current.getCanonicalPath()+  "/src/sample01";
+        String sequence02fp = current.getCanonicalPath()+  "/src/sample02";
+
+        System.out.print("Output 01: ");
+        countGTC(sequence01fp);
+
+        System.out.print("Output 02: ");
+        countGTC(sequence02fp);
+    }
+
+    public static void countGTC(String filePath) throws IOException{
+        FileInputStream inputStream = new FileInputStream(filePath);
 
         BufferedInputStream bis = new BufferedInputStream(inputStream);
         char fprev = '-';
@@ -17,7 +27,7 @@ public class DNA {
             }else{
                 if (c == 'T'){
                     if(prev == 'G'){
-//                        System.out.println("Res1 : " + prev + " : " + c);
+                        // System.out.println("Res1 : " + prev + " : " + c);
                         // Set G to be the first previous
                         fprev = prev;
 
@@ -29,7 +39,7 @@ public class DNA {
                     }
                 }else if (c == 'C'){
                     if (fprev == 'G' && prev == 'T') {
-//                 gtc_count       System.out.println("Res2 : " + fprev + " : " + prev+ " : " + c);
+                        // System.out.println("Res2 : " + fprev + " : " + prev+ " : " + c);
                         // Set T to  be first Previous
                         fprev = prev;
 
@@ -37,7 +47,7 @@ public class DNA {
                         prev  = c;
 
                         // Increment counter for gtc since this is the occurrence of GTC
-                        gtc_count += 1;
+                        gtc_count++;
                     }else{
                         prev = '-';
                     }
@@ -53,6 +63,5 @@ public class DNA {
         } else {
             System.out.println("sequence \"GTC\" appeared : " + gtc_count+ "; infection chance is high");
         }
-
     }
 }
